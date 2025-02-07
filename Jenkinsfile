@@ -1,36 +1,12 @@
 pipeline {
     agent any
-
     stages {
-        stage('Build') {
+        stage('Test Slack') {
             steps {
-                echo 'Building the project...'
+                echo "About to send Slack notification..." // For debugging
+                slackSend channel: '#jenkins-alerts', message: "Test notification from Jenkins!"
+                echo "Slack notification sent (or attempted)..." // For debugging
             }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-            }
-        }
-
-        stage('Notify Slack') {
-            steps {
-                slackSend (
-                    channel: '#jenkins-alerts', // Replace with your Slack channel
-                    message: "Jenkins Build Successful! ", // Customize your message
-                    color: "good" // "good", "warning", or "danger"
-                )
-            }
-        }
-    }
-    post {
-        failure {
-            slackSend (
-                channel: '#jenkins-alerts', // Replace with your Slack channel
-                message: "Jenkins Build Failed! ", // Customize your message
-                color: "danger" // "good", "warning", or "danger"
-            )
         }
     }
 }
