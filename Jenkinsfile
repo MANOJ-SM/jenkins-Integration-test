@@ -1,12 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Test Slack') {
+        stage('Build') {
             steps {
-                echo "About to send Slack notification..." // For debugging
-                slackSend channel: '#jenkins-alerts', message: "Test notification from Jenkins!"
-                echo "Slack notification sent (or attempted)..." // For debugging
+                echo 'Building...'
             }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+    post {
+        success {
+            jiraAddComment idOrKey: 'SCRUM-1', comment: "Build & Deployment Successful "
+        }
+        failure {
+            jiraAddComment idOrKey: 'SCRUM-1', comment: "Build Failed "
         }
     }
 }
