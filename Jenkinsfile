@@ -13,11 +13,12 @@ pipeline {
         }
     }
     post {
-        success {
-            jiraAddComment idOrKey: 'SCRUM-1', comment: "Build & Deployment Successful "
-        }
-        failure {
-            jiraAddComment idOrKey: 'SCRUM-1', comment: "Build Failed "
-        }
+    success {
+        jiraAddComment site: 'MyJiraCloud', idOrKey: 'JIRA-123', comment: "Build & Deployment Successful"  // Replace MyJira with your site name
+    }
+    failure {
+        jiraAddComment site: 'MyJiraCloud', idOrKey: 'JIRA-123', comment: "Build Failed"  // Replace MyJira with your site name
+    }
+}
     }
 }
